@@ -6,8 +6,9 @@ class QuotesController < ApplicationController
   end
 
   def show
-
+    set_quote
   end
+  
 
   def new
     @quote = Quote.new
@@ -18,25 +19,35 @@ class QuotesController < ApplicationController
     if @quote.save
       redirect_to quotes_path, notice: "Quote was successfully created."
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-
+    set_quote
   end
 
   def update
     if @quote.update(quote_params)
       redirect_to quotes_path, notice: "Quote was successfully updated."
     else
-      render :edit
+      render :new, status: :unprocessable_entity
     end
   end
 
   def destroy
     @quote.destroy
     redirect_to quotes_path, notice: "Quote was successfully destroyed."
+  end
+
+  private
+
+  def set_quote
+    @quote = Quote.find(params[:id])
+  end
+
+  def quote_params
+    params.require(:quote).permit(:name)
   end
 
 end

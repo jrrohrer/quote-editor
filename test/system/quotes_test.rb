@@ -29,11 +29,11 @@ class QuotesTest < ApplicationSystemTestCase
   test "Showing a quote" do
     visit quotes_path
     click_link @quote.name
-    assert_selector "h1", text: "Quotes"
+    assert_selector "h1", text: @quote.name
   end
 
   test "Updating a quote" do
-    visit_quotes_path
+    visit quotes_path
     assert_selector "h1", text: "Quotes"
     click_on "Edit", match: :first
     assert_selector "h1", text: "Edit Quote"
